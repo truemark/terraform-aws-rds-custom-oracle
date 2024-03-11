@@ -124,7 +124,7 @@ variable "family" {
 variable "ingress_cidrs" {
   description = "A list of CIDR blocks which are allowed to access the database"
   type        = list(string)
-  default     = ["0.0.0.0/0"]
+  default     = ["10.0.0.0/8"]
 }
 
 variable "instance_name" {
