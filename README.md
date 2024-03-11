@@ -38,10 +38,10 @@ module "db" {
   store_master_password_as_secret = true
   subnet_ids                      = ["subnet-0613436966e999", "subnet-0613436966ea998"]
   tags = {
-    "owner"         = "owner_name"
-    "description"   = "description"
+    "owner"                       = "owner_name"
+    "description"                 = "description"
   }
-  vpc_id = "vpc-0a6c8fae7776adb32"
+  vpc_id                          = "vpc-0a6c8fae7776adb32"
 }
 ```
 ## Parameters
