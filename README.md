@@ -39,7 +39,7 @@ module "db" {
   subnet_ids                      = ["subnet-0613436966e999", "subnet-0613436966ea998"]
   tags = {
     "owner"         = "owner_name"
-    "description"      = "description"
+    "description"   = "description"
   }
   vpc_id = "vpc-0a6c8fae7776adb32"
 }
