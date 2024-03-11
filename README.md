@@ -28,8 +28,7 @@ module "db" {
   skip_final_snapshot             = true
   storage_type                    = "io1"
   store_master_password_as_secret = true
-  subnet_ids                      = [ "subnet-0613436966e999", "subnet-0613436966ea998" ]
-  snapshot_identifier             = terraform.workspace == "default" ? "" : terraform.workspace == "ylcln" ? "rds:ylprd-2024-02-25-03-06" : terraform.workspace == "yldev4" ? "rds:ylprd-2024-01-28-03-06" : terraform.workspace == "ylenv6" ? "rds:ylprd-2023-11-26-03-05" : terraform.workspace == "ylenv7" ? "rds:ylprd-2024-01-12-03-05" : terraform.workspace == "ylenv11" ? "rds:ylprd-2024-01-28-03-06" : terraform.workspace == "ylenv14" ? "rds:ylprd-2023-11-12-03-05" : terraform.workspace == "ylext1" ? "rds:ylprd-2024-02-04-03-05" : terraform.workspace == "ylext3" ? "rds:ylprd-2024-02-11-03-05" : terraform.workspace == "ylext4" ? "rds:ylprd-2024-01-21-03-06" : terraform.workspace == "ylext5" ? "rds:ylprd-2023-12-24-03-05" : terraform.workspace == "ylext9" ? "rds:ylprd-2023-12-24-03-05" : terraform.workspace == "ylext10" ? "rds:ylprd-2024-02-18-03-05" : terraform.workspace == "ylext11" ? "rds:ylprd-2024-03-03-03-05" : terraform.workspace == "ylext12" ? "rds:ylprd-2023-11-26-03-05" : terraform.workspace == "ylext13" ? "rds:ylprd-2024-01-21-03-06" : "" #data.aws_db_snapshot.recent.id
+  subnet_ids                      = ["subnet-0613436966e999", "subnet-0613436966ea998"]
   tags = {
     "owner"         = "owner_name"
     "description"      = "description"
