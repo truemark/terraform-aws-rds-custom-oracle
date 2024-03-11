@@ -10,7 +10,15 @@ module "db" {
   copy_tags_to_snapshot           = true
   custom_iam_instance_profile     = "AWSRDSCustomInstanceProfileForRdsCustomInstance"
   database_name                   = "DB_NAME"
-  db_options                      = local.options
+  db_options = [
+    {
+      option_name = "Timezone",
+      option_settings = [{
+        name  = "TIME_ZONE"
+        value = "America/Denver"
+      }]
+    }
+  ]
   deletion_protection             = true
   engine                          = "custom-oracle-ee"
   engine_version                  = "19.myoraclecustom19_16"
