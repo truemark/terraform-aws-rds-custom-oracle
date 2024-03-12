@@ -51,7 +51,6 @@ The following parameters are supported:
 - apply_immediately
 - auto_minor_version_upgrade
 - backup_retention_period
-- ca_cert_identifier
 - copy_tags_to_snapshot
 - create_db_option_group
 - create_db_parameter_group

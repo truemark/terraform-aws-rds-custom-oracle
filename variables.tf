@@ -22,9 +22,9 @@ variable "backup_retention_period" {
 }
 
 variable "ca_cert_identifier" {
-  description = "Specifies the identifier of the CA certificate for the DB instance"
+  description = "Specifies the identifier of the CA certificate for the DB instance. This does not currently work so leave null for now."
   type        = string
-  default     = "rds-ca-rsa2048-g1"
+  default     = null
 }
 
 variable "copy_tags_to_snapshot" {
