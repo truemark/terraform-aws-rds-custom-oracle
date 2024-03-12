@@ -1,25 +1,91 @@
-# This is an example please modify
-# AWS RDS Aurora MySQL
-
-This terraform module creates ...
-
-## Quick Links
- * [AWS Terraform Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+This repository creates an Oracle RDS Custom database instance.
 
 ## Example Usage
 ```
-module "example" {
-  source                 = "truemark/terraform-template"
-  version                = "0.0.1"
-  database_name          = "example"
-  deletion_protection    = true
+module "db" {
+  source                          = "truemark/aws-rds-oracle/aws"
+  version                         = "0.0.1"
+  
+  allocated_storage               = 100
+  copy_tags_to_snapshot           = true
+  custom_iam_instance_profile     = "AWSRDSCustomInstanceProfileForRdsCustomInstance"
+  database_name                   = "DB_NAME"
+  db_options = [
+    {
+      option_name = "Timezone",
+      option_settings = [{
+        name  = "TIME_ZONE"
+        value = "America/Denver"
+      }]
+    }
+  ]
+  deletion_protection             = true
+  engine                          = "custom-oracle-ee"
+  engine_version                  = "19.myoraclecustom19_16"
+  instance_name                   = "INSTANCE_NAME"
+  instance_type                   = "db.x2iedn.8xlarge"
+  family                          = "19"
+  kms_key_id                      = "alias/shared"
+  license_model                   = "bring-your-own-license"
+  preferred_maintenance_window    = "sun:12:00-sun:14:00"
+  preferred_backup_window         = "03:00-05:00"
+  major_engine_version            = "19"
+  manage_master_user_password     = false
+  master_iops                     = 12000
+  random_password_length          = 16
+  skip_final_snapshot             = true
+  storage_type                    = "io1"
+  store_master_password_as_secret = true
+  subnet_ids                      = ["subnet-0613436966e999", "subnet-0613436966ea998"]
+  tags = {
+    "owner"                       = "owner_name"
+    "description"                 = "description"
+  }
+  vpc_id                          = "vpc-0a6c8fae7776adb32"
 }
 ```
 ## Parameters
 The following parameters are supported:
 
+- allocated_storage
 - apply_immediately
-- allowed_cidr_blocks
 - auto_minor_version_upgrade
 - backup_retention_period
 - ca_cert_identifier
+- copy_tags_to_snapshot
+- create_db_option_group
+- create_db_parameter_group
+- create_db_subnet_group
+- custom_iam_instance_profile
+- database_name
+- db_instance_create_timeout
+- db_instance_update_timeout
+- db_instance_delete_timeout
+- db_options
+- db_subnet_group_name
+- deletion_protection
+- egress_cidrs
+- engine
+- engine_version
+- family
+- ingress_cidrs
+- instance_name
+- instance_type
+- kms_key_id
+- license_model
+- major_engine_version
+- manage_master_user_password
+- master_iops
+- master_username
+- option_group_description
+- option_group_name
+- preferred_backup_window
+- preferred_maintenance_window
+- random_password_length
+- skip_final_snapshot
+- snapshot_identifier
+- storage_type
+- store_master_password_as_secret
+- subnet_ids
+- tags
+- vpc_id
