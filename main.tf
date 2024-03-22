@@ -16,7 +16,7 @@ module "db" {
 
   # The name of the database to create. Upper is required by Oracle.
   # Can't be more than 8 characters.
-  db_name = upper(var.instance_name)
+  db_name = upper(var.database_name == "" ? var.instance_name : var.database_name)
 
   #-----------------------------------------------------------------------------
   # Define references to the parameter group. This module does not create it.
