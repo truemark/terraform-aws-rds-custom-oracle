@@ -8,8 +8,8 @@ module "db" {
   
   custom_iam_instance_profile     = "AWSRDSCustomInstanceProfileForRdsCustomInstance"
   engine_version                  = "19.myoraclecustom19_16"
-  instance_name                   = local.name
-  kms_key_id                      = join("", data.aws_kms_alias.db.*.target_key_arn)
+  instance_name                   = "DB_NAME"
+  kms_key_id                      = "join("", data.aws_kms_alias.db.*.target_key_arn)"
   license_model                   = "bring-your-own-license"
   subnet_ids                      = ["subnet-0613436966e999", "subnet-0613436966ea998"]
   tags = {
@@ -45,7 +45,7 @@ module "db" {
   instance_name                   = "INSTANCE_NAME"
   instance_type                   = "db.x2iedn.8xlarge"
   family                          = "19"
-  kms_key_id                      = "alias/shared"
+  kms_key_id                      = "join("", data.aws_kms_alias.db.*.target_key_arn)"
   license_model                   = "bring-your-own-license"
   preferred_maintenance_window    = "sun:12:00-sun:14:00"
   preferred_backup_window         = "03:00-05:00"
