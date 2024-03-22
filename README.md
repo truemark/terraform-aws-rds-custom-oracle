@@ -3,8 +3,8 @@ This repository creates an Oracle RDS Custom database instance.
 ## Miminal Usage
 ```
 module "db" {
-  source                          = "truemark/aws-rds-oracle/aws"
-  version                         = "0.0.12"
+  source                          = "truemark/aws-rds-custom-oracle/aws"
+  version                         = "0.0.3"
   
   custom_iam_instance_profile     = "AWSRDSCustomInstanceProfileForRdsCustomInstance"
   engine_version                  = "19.myoraclecustom19_16"
