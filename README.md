@@ -1,10 +1,30 @@
 This repository creates an Oracle RDS Custom database instance.
 
+## Miminal Usage
+```
+module "db" {
+  source                          = "truemark/aws-rds-oracle/aws"
+  version                         = "0.0.12"
+  
+  custom_iam_instance_profile     = "AWSRDSCustomInstanceProfileForRdsCustomInstance"
+  engine_version                  = "19.myoraclecustom19_16"
+  instance_name                   = local.name
+  kms_key_id                      = join("", data.aws_kms_alias.db.*.target_key_arn)
+  license_model                   = "bring-your-own-license"
+  subnet_ids                      = ["subnet-0613436966e999", "subnet-0613436966ea998"]
+  tags = {
+    "automation:id"               = "stack_name"
+    "automation:url"              = "stack_url"
+  }
+  vpc_id                          = "vpc-0a6c8fae7776adb32"
+}
+```
+
 ## Example Usage
 ```
 module "db" {
   source                          = "truemark/aws-rds-oracle/aws"
-  version                         = "0.0.1"
+  version                         = "0.0.12"
   
   allocated_storage               = 100
   copy_tags_to_snapshot           = true
@@ -30,7 +50,6 @@ module "db" {
   preferred_maintenance_window    = "sun:12:00-sun:14:00"
   preferred_backup_window         = "03:00-05:00"
   major_engine_version            = "19"
-  manage_master_user_password     = false
   master_iops                     = 12000
   random_password_length          = 16
   skip_final_snapshot             = true
@@ -73,7 +92,6 @@ The following parameters are supported:
 - kms_key_id
 - license_model
 - major_engine_version
-- manage_master_user_password
 - master_iops
 - master_username
 - option_group_description

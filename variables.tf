@@ -29,7 +29,7 @@ variable "ca_cert_identifier" {
 
 variable "copy_tags_to_snapshot" {
   description = "Copy all cluster tags to snapshots"
-  default     = false
+  default     = true
 }
 
 variable "create_db_option_group" {
@@ -94,7 +94,7 @@ variable "db_subnet_group_name" {
 
 variable "deletion_protection" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "egress_cidrs" {
@@ -106,19 +106,19 @@ variable "egress_cidrs" {
 variable "engine" {
   description = "Oracle database engine."
   type        = string
-  default     = "oracle-se2"
+  default     = "custom-oracle-ee"
 }
 
 variable "engine_version" {
   description = "Oracle database engine version."
   type        = string
-  default     = "12.1.0.2.v19"
+  default     = null
 }
 
 variable "family" {
   description = "The family of the DB parameter group"
   type        = string
-  default     = "oracle-se2-12.1"
+  default     = "19"
 }
 
 variable "ingress_cidrs" {
@@ -136,7 +136,7 @@ variable "instance_name" {
 variable "instance_type" {
   description = "Instance type to use at master instance. If instance_type_replica is not set it will use the same type for replica instances"
   type        = string
-  default     = "db.r4.large"
+  default     = "db.r6i.large"
 }
 
 variable "kms_key_id" {
@@ -146,27 +146,27 @@ variable "kms_key_id" {
 }
 
 variable "license_model" {
-  description = "The licensing model for Oracle on RDS."
+  description = "The licensing model for Oracle on RDS. Options are bring-your-own-license or license-included."
   type        = string
-  default     = "license-included"
+  default     = "bring-your-own-license"
 }
 
 variable "major_engine_version" {
   description = "Oracle database engine version."
   type        = string
-  default     = "12.1"
+  default     = "19"
 }
 
 variable "manage_master_user_password" {
   description = "Set to true to allow RDS to manage the master user password in Secrets Manager"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "master_iops" {
   description = "The iops to associate with the master db instance storage."
   type        = number
-  default     = null
+  default     = 12000
 }
 
 variable "master_username" {

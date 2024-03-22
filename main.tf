@@ -1,12 +1,22 @@
+locals {
+  tags = merge(var.tags,
+    {
+      "automation:component-id"     = "rds-custom-oracle",
+      "automation:component-url"    = "https://registry.terraform.io/modules/truemark/rds-custom-oracle/aws/latest",
+      "automation:component-vendor" = "TrueMark",
+      "backup:policy"               = "default-week",
+  })
+}
+
 module "db" {
   # https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
   # https://github.com/terraform-aws-modules/terraform-aws-rds/blob/v3.3.0/examples/complete-oracle/main.tf
   source  = "terraform-aws-modules/rds/aws"
-  version = "6.5.2"
+  version = "6.5.3"
 
   # The name of the database to create. Upper is required by Oracle.
   # Can't be more than 8 characters.
-  db_name = upper(var.database_name)
+  db_name = upper(var.instance_name)
 
   #-----------------------------------------------------------------------------
   # Define references to the parameter group. This module does not create it.
@@ -32,10 +42,10 @@ module "db" {
   create_db_option_group      = var.create_db_option_group # not used in custom set to false
   create_db_subnet_group      = var.create_db_subnet_group
   custom_iam_instance_profile = var.custom_iam_instance_profile
-  db_instance_tags            = var.tags
+  db_instance_tags            = local.tags
   db_subnet_group_description = "Subnet group for ${var.instance_name}. Managed by Terraform."
   db_subnet_group_name        = var.db_subnet_group_name != null ? var.db_subnet_group_name : var.instance_name
-  db_subnet_group_tags        = var.tags
+  db_subnet_group_tags        = local.tags
   deletion_protection         = var.deletion_protection
   engine                      = var.engine
   engine_version              = var.engine_version
@@ -57,7 +67,7 @@ module "db" {
   storage_encrypted           = true
   storage_type                = var.storage_type
   subnet_ids                  = var.subnet_ids
-  tags                        = var.tags
+  tags                        = local.tags
   username                    = var.master_username
   vpc_security_group_ids      = [aws_security_group.db_security_group.id]
 
@@ -73,7 +83,7 @@ resource "aws_secretsmanager_secret" "db" {
   count       = var.store_master_password_as_secret ? 1 : 0
   name_prefix = "database/${var.instance_name}/master-"
   description = "Master password for ${var.master_username} in ${var.instance_name}"
-  tags        = var.tags
+  tags        = local.tags
 }
 
 resource "aws_secretsmanager_secret_version" "db" {
@@ -85,7 +95,7 @@ resource "aws_secretsmanager_secret_version" "db" {
     "host"           = module.db.db_instance_address
     "port"           = module.db.db_instance_port
     "dbname"         = module.db.db_instance_name
-    "connect_string" = "${module.db.db_instance_endpoint}/${upper(var.database_name)}"
+    "connect_string" = "${module.db.db_instance_endpoint}/${upper(var.instance_name)}"
     "engine"         = "oracle"
   })
 }
@@ -112,7 +122,7 @@ data "aws_secretsmanager_secret_version" "db" {
 resource "aws_security_group" "db_security_group" {
   name   = var.instance_name
   vpc_id = var.vpc_id
-  tags   = var.tags
+  tags   = local.tags
 
   ingress {
     from_port   = 1521
