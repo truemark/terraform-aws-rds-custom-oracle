@@ -96,6 +96,7 @@ The following parameters are supported:
 - master_username
 - option_group_description
 - option_group_name
+- password
 - preferred_backup_window
 - preferred_maintenance_window
 - random_password_length

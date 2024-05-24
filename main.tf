@@ -61,7 +61,7 @@ module "db" {
   option_group_name           = var.instance_name
   options                     = var.db_options
   option_group_description    = var.option_group_description
-  password                    = var.store_master_password_as_secret ? random_password.root_password.result : null
+  password                    = var.store_master_password_as_secret ? random_password.root_password.result : var.password
   skip_final_snapshot         = var.skip_final_snapshot
   snapshot_identifier         = var.snapshot_identifier
   storage_encrypted           = true
