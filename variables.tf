@@ -157,12 +157,6 @@ variable "major_engine_version" {
   default     = "19"
 }
 
-variable "manage_master_user_password" {
-  description = "Set to true to allow RDS to manage the master user password in Secrets Manager"
-  type        = bool
-  default     = false
-}
-
 variable "master_iops" {
   description = "The iops to associate with the master db instance storage."
   type        = number
