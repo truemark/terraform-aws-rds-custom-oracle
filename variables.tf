@@ -157,12 +157,6 @@ variable "major_engine_version" {
   default     = "19"
 }
 
-variable "manage_master_user_password" {
-  description = "Set to true to allow RDS to manage the master user password in Secrets Manager"
-  type        = bool
-  default     = false
-}
-
 variable "master_iops" {
   description = "The iops to associate with the master db instance storage."
   type        = number
@@ -184,6 +178,16 @@ variable "option_group_name" {
   description = "Name of the option group"
   type        = string
   default     = null
+}
+
+variable "password" {
+  description = <<EOF
+  Password for the master DB user. Note that this may show up in logs, and it will be stored in the state file.
+  The password provided will not be used if `manage_master_user_password` is set to true.
+  EOF
+  type        = string
+  default     = null
+  sensitive   = true
 }
 
 variable "preferred_backup_window" {

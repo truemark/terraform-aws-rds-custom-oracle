@@ -57,11 +57,11 @@ module "db" {
   license_model               = var.license_model
   maintenance_window          = var.preferred_maintenance_window
   major_engine_version        = var.major_engine_version
-  manage_master_user_password = var.manage_master_user_password
+  manage_master_user_password = false # not supported in custom
   option_group_name           = var.instance_name
   options                     = var.db_options
   option_group_description    = var.option_group_description
-  password                    = var.store_master_password_as_secret ? random_password.root_password.result : null
+  password                    = var.password != null ? var.password : random_password.root_password.result
   skip_final_snapshot         = var.skip_final_snapshot
   snapshot_identifier         = var.snapshot_identifier
   storage_encrypted           = true
@@ -91,7 +91,7 @@ resource "aws_secretsmanager_secret_version" "db" {
   secret_id = aws_secretsmanager_secret.db[count.index].id
   secret_string = jsonencode({
     "username"       = var.master_username
-    "password"       = random_password.root_password.result
+    "password"       = var.password != null ? var.password : random_password.root_password.result
     "host"           = module.db.db_instance_address
     "port"           = module.db.db_instance_port
     "dbname"         = module.db.db_instance_name

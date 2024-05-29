@@ -54,7 +54,6 @@ module "db" {
   random_password_length          = 16
   skip_final_snapshot             = true
   storage_type                    = "io1"
-  store_master_password_as_secret = true
   subnet_ids                      = ["subnet-0613436966e999", "subnet-0613436966ea998"]
   tags = {
     "owner"                       = "owner_name"
@@ -96,6 +95,7 @@ The following parameters are supported:
 - master_username
 - option_group_description
 - option_group_name
+- password
 - preferred_backup_window
 - preferred_maintenance_window
 - random_password_length
